@@ -1,33 +1,30 @@
 <?php
 
- function displayDays() {
-   $month = date("n");
-   $year = date("Y");
-//funkca sprawdza ile jest dni w podanym miesiacu
-function check_number_of_days($month, $year) {
-  $number = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-  return $number;
-}
+ function displayChoosenMonth() {
+   if(isset($_POST['month'])){
+    $mon = date("n",strtotime($_POST['month']));
+    $yea = date("Y",strtotime($_POST['month']));
 
- //funcka sprawdza jakim dniem jest pierszy  dzien miesiaca 0-niedziela 6-sobota
- function check_first_month_day($month, $year) {
-   $weekDay = date("w", mktime(0, 0, 0, $month, 1, $year));
-   return $weekDay;
- }
-
-//zostawienie pustych miejsc w kalendarzu i zaczecie odliczania od pierwszego dnia miesiaca
-for($i=0; $i<check_first_month_day($month, $year); $i++) {
-  echo '<td><input type="hidden"></input></td>';
-  }
-
-// wyswietlenie dni miesiaca i podswietlenie na czerwono aktualnego dnia
- for ($i=1; $i<=check_number_of_days($month, $year); $i++) {
-   if($i == date("d")) echo "<td class='actual' value='$i'>$i</td>";
-    else echo "<td value='$i'>$i</td>";
+    //funkca sprawdza ile jest dni w podanym miesiacu
+    function check_number_of_days($mon, $yea) {
+      $number = cal_days_in_month(CAL_GREGORIAN, $mon, $yea);
+      return $number;
+    }
+    //funcka sprawdza jakim dniem jest pierszy  dzien miesiaca 0-niedziela 6-sobota
+    function check_first_month_day($mon, $yea) {
+      $weekDay = date("w", mktime(0, 0, 0, $mon, 1, $yea));
+      return $weekDay;
+    }
+    //puste miejsca, zaczecie odliczania od wlasciwego dnia tygodnia
+   for($i=0; $i<check_first_month_day($mon, $yea); $i++) {
+     echo '<td><input type="hidden"></input></td>';
    }
-}
-
-
+   // wyswietlenie dni miesiaca i podswietlenie na czerwono aktualnego dnia
+  for ($i=1; $i<=check_number_of_days($mon, $yea); $i++) {
+     echo "<td value='$i'>$i</td>";
+    }
+  }
+ }
 //funkcja pokazuje kolejny miesiac i rok do wyboru
  function monthYear() {
     $currentmonth = date("n");
@@ -35,7 +32,7 @@ for($i=0; $i<check_first_month_day($month, $year); $i++) {
     $count = 12;
 
     $currentdate = date("F Y", strtotime($currentyear.'-'.$currentmonth));
-    echo "<option value='$currentdate' >$currentdate</option>";
+    echo "<option value='$currentdate'>$currentdate</option>";
 
     for($i=1; $i<$count; $i++) {
       $currentmonth++;
@@ -44,6 +41,7 @@ for($i=0; $i<check_first_month_day($month, $year); $i++) {
         $currentyear++;
       }
       $selectdate = date("F Y", strtotime($currentyear."-".$currentmonth));
+
       echo "<option value='$selectdate'>$selectdate</option>";
 
     }
@@ -88,7 +86,7 @@ for($i=0; $i<check_first_month_day($month, $year); $i++) {
         <th>SAT</th>
       </tr>
       <tr>
-       <?php displayDays() ?>
+       <?php displayChoosenMonth() ?>
       </tr>
     </tbody>
   </table>

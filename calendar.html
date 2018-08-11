@@ -1,3 +1,57 @@
+<?php
+
+//funkca sprawdza ile jest dni w podanym miesiacu
+$month = 2;
+$year = 2020;
+
+function check_number_of_days($month, $year) {
+  $number = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+  return $number;
+}
+
+echo check_number_of_days($month, $year)."<br>";
+
+// funkcja sprawdza dzien tygodnia przypisany do podanej daty
+$day = 14;
+$month = 2;
+$year = 2020;
+
+function check_week_day($day, $month, $year) {
+  $weekDay = date("l", mktime(0, 0, 0, $month, $day, $year));
+  return $weekDay;
+}
+
+echo check_week_day($day, $month, $year)."<br>";
+
+
+//funcka sprawdza jakim dniem jest pierszy  dzien miesiaca 0-niedziela 6-sobota
+$month = 7;
+$year = 2018;
+
+function check_first_month_day($month, $year) {
+  $weekDay = date("w", mktime(0, 0, 0, $month, 1, $year));
+  return $weekDay;
+}
+
+echo check_first_month_day($month, $year)."<br>";
+
+
+// zamienienie liczby na odpowiedni dzien tygodnia
+
+function number_to_weekday($day) {
+
+  $weekDay = array(0 => "Sunday", "Monday", "Tuesday", "Wendsday", "Thursday",  "Friday", "Saturday");
+  return $weekDay[$day];
+}
+ echo number_to_weekday(check_first_month_day($month, $year));
+
+//zostawienie pustych miejsc w kalendarzu i zaczecie odliczania od pierwszego dnia miesiaca
+ $emptySpaces = check_first_month_day($month, $year);
+ for($i=0; $i<$emptySpaces; $i++) {
+   echo '<input type="hidden"></input>';
+ }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,27 +67,32 @@
 <body>
 
 <div class="container">
+  <form action="calendar.php" method="post">
   <table class="table table-bordered table-hover-cells mb-1">
         <h4 class="d-block p-2 mb-0 bg-primary text-white text-center">Reservation Calendar</h4>
         <div class="month">
-          <select>
-            <option>Styczen</option>
-            <option>Luty</option>
-            <option>Marzec</option>
-            <option>Kwiecien</option>
-            <option>Maj</option>
-            <option>Czerwiec</option>
-            <option>Lipiec</option>
-            <option>Sierpien</option>
-            <option>Wrzesien</option>
-            <option>Pazdziernik</option>
-            <option>Listopad</option>
-            <option>Grudzien</option>
+          <select class="custom-select custom-select-sm">
+            <option value="1">Styczen</option>
+            <option value="2">Luty</option>
+            <option value="3">Marzec</option>
+            <option value="4">Kwiecien</option>
+            <option value="5">Maj</option>
+            <option value="6">Czerwiec</option>
+            <option value="7">Lipiec</option>
+            <option value="8">Sierpien</option>
+            <option value="9">Wrzesien</option>
+            <option value="10">Pazdziernik</option>
+            <option value="11">Listopad</option>
+            <option value="12">Grudzien</option>
           </select>
         </div>
           <div class="year">
-            <select>
-              <option>2018</option>
+            <select class="custom-select custom-select-sm">
+              <option value="1">2018</option>
+              <option value="2">2019</option>
+              <option value="3">2020</option>
+              <option value="1">2021</option>
+              <option value="5">2022</option>
             </select>
           </div>
     <tbody class="bg-light">
@@ -47,54 +106,21 @@
         <th>SAT</th>
       </tr>
       <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
-        <td>5</td>
-        <td>6</td>
-        <td>7</td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>9</td>
-        <td>10</td>
-        <td>11</td>
-        <td>12</td>
-        <td>13</td>
-        <td>14</td>
-      </tr>
-      <tr>
-        <td>15</td>
-        <td>16</td>
-        <td>17</td>
-        <td>18</td>
-        <td>19</td>
-        <td>20</td>
-        <td>21</td>
-      </tr>
-      <tr>
-        <td>22</td>
-        <td>23</td>
-        <td>24</td>
-        <td>25</td>
-        <td>26</td>
-        <td>27</td>
-        <td>28</td>
-      </tr>
-      <tr>
-        <td>29</td>
-        <td>30</td>
-        <td>31</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td> <?php for() ?>
 
+        </td>
       </tr>
+
     </tbody>
   </table>
-  <button type="submit" name="submit" class="btn btn-primary float-right">Submit</button>
+
+    <div class="input-group">
+      <input type="text" aria-label="Name" class="form-control" placeholder="Your name">
+      <input type="text" aria-label="email" class="form-control" placeholder="E-mail adress">
+    </div>
+
+    <button type="submit" name="submit" class="btn btn-primary float-right mt-1">Submit</button>
+  </form>
 
 </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
