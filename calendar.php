@@ -75,7 +75,6 @@ for($i=0; $i<check_first_month_day($month, $year); $i++) {
           <select class="custom-select custom-select-sm" name="month">
             <?php monthYear()?>
          </select>
-        </div>
           </div>
     <tbody class="bg-light">
       <tr class="bg-secondary text-white">
